@@ -49,7 +49,7 @@ PIRM-SR 2018就是ESRGAN得冠军的那个比赛： https://www.pirm2018.org/PIR
  
 ![srgan对比](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/srgan.jpg)  
   
-【注：下面的对比图忘记标记PSNR/SSIM了，用的都是对比图表中59000epoch的图片，srgan’的PSNR还是要高于srgan-d,SSIM也差不多，但是图片质量会差很多，这就是我们改进后的实际的好处，更清晰】   
+【注：下面的对比图忘记标记PSNR/SSIM了，用的都是对比图表中60000epoch的图片，srgan’的PSNR还是要高于srgan-d,SSIM也差不多，但是图片质量会差很多，这就是我们改进后的实际的好处，更清晰】   
 ![srgan对比](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/srgan-%E5%AF%B9%E6%AF%94%E5%9B%BE.png)   
 从理论上讲，dropout和近年来提到的信息瓶颈也是有相似之处的，都是遗忘的哲学，去芜存菁，所以能有效也并不意外   
 
