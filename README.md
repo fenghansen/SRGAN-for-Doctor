@@ -1,6 +1,7 @@
 # SRGAN-for-Doctor
 ## 0.引用
-**SRGAN基础代码微调自 https://github.com/MathiasGruber/SRGAN-Keras  
+**具体内容请参见我们的北科大摇篮杯论文（会在比赛结束后公开），本GitHub项目仅是论文的补充说明    
+SRGAN基础代码微调自 https://github.com/MathiasGruber/SRGAN-Keras  
 结构性的实现有对照过https://github.com/SavaStevanovic/ESRGAN  
 本项目的自然图像版本为https://github.com/fenghansen/ESRGAN-Keras**    
 
@@ -54,4 +55,5 @@ PIRM-SR 2018就是ESRGAN得冠军的那个比赛： https://www.pirm2018.org/PIR
 从理论上讲，dropout和近年来提到的信息瓶颈也是有相似之处的，都是遗忘的哲学，去芜存菁，所以能有效也并不意外   
 
 
-***最后，代码运行请注意版本问题，python3.6。要不有些util里有些方法不兼容。测试的话权重直接加载，用gan.test输出就行***
+***最后，代码运行请注意版本问题，python3.6。要不有些util里有些方法不兼容。测试的话权重直接加载，用gan.test输出就行。***  
+***【彩蛋：如果想直接输出放大的图像，请使用util.py里的plot_bigger_images方法（改一下test函数的最后一行即可），不过这将没有PSNR和SSIM，因为没有原图做比较。具体案例可以参考本项目的自然图像版本https://github.com/fenghansen/ESRGAN-Keras 的后两个DIV2K案例。主要是没有比较大家看不出好坏，所以只能用重建图像来做比较了，不过重建图像由于有信息损失，部分图像（黄色框框）内容和原图不太一致，但其实和4x低清压缩图片的大体情况十分一致】
