@@ -1,12 +1,11 @@
 # SRGAN-for-Doctor
 ## 0.引用
-**具体内容请参见我们的北科大摇篮杯论文（会在比赛结束后公开），本GitHub项目仅是论文的补充说明    
-SRGAN基础代码微调自 https://github.com/MathiasGruber/SRGAN-Keras  
+**SRGAN基础代码微调自 https://github.com/MathiasGruber/SRGAN-Keras  
 结构性的实现有对照过https://github.com/SavaStevanovic/ESRGAN  
-本项目的自然图像版本为https://github.com/fenghansen/ESRGAN-Keras**    
+本项目的自然图像版本为https://github.com/fenghansen/ESRGAN-Keras （没改VGG19，自然图像用ImageNet预训练的VGG19挺好）**    
 
 ## 1.环境: Python 3.6 + Keras 2.2.4 + Tensorflow 1.12 + PyCharm 2018  
-## 2.CT数据集上的初步实验————我们远优于未针对性优化的各个网络
+## 2.CT数据集上的横向对比试验
 这是我们的SRGAN-D在CT数据上运行的结果对比图，传统超分辨率方法是Nearest和Bicubic，基于深度学习的超分辨率方法是SR-RRDB（本网络的第一阶段预训练）、SRGAN（DIV2K训练集）、ESRGAN（原论文提供）、ESRGAN（CT训练集微调）。  
 【这里的ESRGAN（CT微调）原本用的是EnhanceNet，但是考虑到ESRGAN（原论文）的效果太过惊人无法体现其真正问题，我们使用了其CT迁移训练版，该部分由@lyc提供。实际上，参数丝毫未动地用CT图像训练后，**生成的图像在我们现在所使用的epoch之前就开始震荡了**，具体表现为：**噪点纹理一直在变化，但是轮廓无甚变化（边缘已经扭曲）**】
 ![CT0](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/CT0.png)   
@@ -24,7 +23,7 @@ PIRM-SR 2018就是ESRGAN得冠军的那个比赛： https://www.pirm2018.org/PIR
 ![PIRM2018](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/PIRM2018.jpg)  
   
 所以，我想说的是，虽然为了论文我贴了很多PSNR/SSIM的图，但是我觉得这个方法在“清晰”这个概念上，在GAN上，真的没什么意义。  
-## 3.MRI数据集上的深度实验————我们的网络也不惧公平一战
+## 3.MRI数据集上的纵向对比试验
 ### 3.1 实际效果
 那怎么来评判一个模型输出的好坏呢？当然是看啊！！说到底超分辨率追求的不就是视觉效果的提升么？！  
 这是我们在MRI数据集上的效果（因为低剂量CT存在噪点，超分辨率的图像也有不协调点，实际应用价值略低）  
@@ -40,10 +39,10 @@ PIRM-SR 2018就是ESRGAN得冠军的那个比赛： https://www.pirm2018.org/PIR
 【后来我想了想，应该用语义分割任务来预训练VGG的，这样肯定效果更好，不过这个MRI数据集不支持这个操作（没有语义标签），要是想更进一步的话可以考虑这个优化方案】  
 我选择DTD主要是由于这样更稳妥一些，通用性更强，要不然超分辨率CT出来脑MRI条纹就不合适了  
 
-### 3.3 与SRGAN公平一战甚至让了他一手（SRGAN’）的结果
+### 3.3 对SRGAN稳定性改进的直观效果
 另外不得不说，SRGAN的训练并不是十分稳定，我们最重要的改进其实是工程改进，增加了稳定性。逐步放大尺寸训练并不是什么新鲜想法，灵感来自英伟达的那个GAN，但是这个Dropout就纯属在下的灵光一闪了~ **我还真没见过谁往SRGAN里放Dropout（可能是他们觉得这样太蠢……）**  
-从结果上来看，这个dropout很赚，稳定后还能撤掉，一点也不亏，没有它许多时候我都是训练不下来的（不得不说ESRGAN的那个权重我没看明白，用了以后直接训练崩溃，所以只能顺着SRGAN的改）  
-君不见，我本来只是想做个对比试验表达一下原生SRGAN不如我们的清晰，结果它中途直接崩了，太面子了！  
+从结果上来看，这个dropout很赚，稳定后还能撤掉，一点也不亏，没有它许多时候我都是训练不下来的（不得不说ESRGAN的那个权重我没看明白，用了以后直接训练崩溃，所以只能顺着SRGAN的改）。另外，不用WGAN和WGAN-GP的原因在于，5~10倍的训练时间我实在等不起，这个实验时限挺紧的。  
+我本来只是想做个对比试验表达一下原生SRGAN不如我们的清晰，结果它中途直接崩了……比较复杂的图片确实很难训练就是了。
 **由于SRGAN原论文的判别网络D的结构不支持我们的逐步训练方法，所以我们分别训练了三个模型：  
 “原论文训练步骤的SRGAN”、  “采用了原论文的网络参数并应用我们的D网络和训练步骤的SRGAN’”  和  “SRGAN-D”。**  
  
