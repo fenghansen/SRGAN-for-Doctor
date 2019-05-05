@@ -8,7 +8,7 @@
 ## 2.CT数据集上的横向对比试验
 这是我们的SRGAN-D在CT数据上运行的结果对比图，传统超分辨率方法是Nearest和Bicubic，基于深度学习的超分辨率方法是SR-RRDB（本网络的第一阶段预训练）、SRGAN（DIV2K训练集）、ESRGAN（原论文提供）、ESRGAN（CT训练集微调）。  
 【这里的ESRGAN（CT微调）原本用的是EnhanceNet，但是考虑到ESRGAN（原论文）的效果太过惊人无法体现其真正问题，我们使用了其CT迁移训练版，该部分由@lyc提供。实际上，参数丝毫未动地用CT图像训练后，**生成的图像在我们现在所使用的epoch之前就开始震荡了**，具体表现为：**噪点纹理一直在变化，但是轮廓无甚变化（边缘已经扭曲）**】
-![CT0](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/CT0.png)   
+![CT00](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/CT00.png)   
 
 我们郑重声明：这ESRGAN真的是官方权重跑出来的，您可以去官方GitHub提供的链接上下载他们的网络和权重（https://github.com/xinntao/ESRGAN）  
 这说明了什么问题呢？说明通用数据集训练的权重不宜直接迁移运用到医学图像领域，一个领域有一个领域的特殊问题。   
@@ -46,7 +46,7 @@ PIRM-SR 2018就是ESRGAN得冠军的那个比赛： https://www.pirm2018.org/PIR
 **由于SRGAN原论文的判别网络D的结构不支持我们的逐步训练方法，所以我们分别训练了三个模型：  
 “原论文训练步骤的SRGAN”、  “采用了原论文的网络参数并应用我们的D网络和训练步骤的SRGAN’”  和  “SRGAN-D”。**  
  
-![srgan对比](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/srgan.jpg)  
+![srgan对比](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/srgan.png)  
   
 【注：下面的对比图忘记标记PSNR/SSIM了，用的都是对比图表中60000epoch的图片，srgan’的PSNR还是要高于srgan-d,SSIM也差不多，但是图片质量会差很多，这就是我们改进后的实际的好处，更清晰】   
 ![srgan对比](https://github.com/fenghansen/SRGAN-for-Doctor/blob/master/pics/srgan-%E5%AF%B9%E6%AF%94%E5%9B%BE.png)   
